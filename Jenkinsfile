@@ -1,28 +1,26 @@
 pipeline {
-    agent any
+    // Mówimy Jenkinsowi: "Użyj obrazu Pythona jako swojego środowiska"
+    agent {
+        docker { 
+            image 'python:3.10-slim' 
+        }
+    }
     
     stages {
-        stage('Pobieranie kodu') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Instalacja bibliotek') {
             steps {
-                // Instalujemy Selenium i Pytest wewnątrz Jenkinsa
+                // Teraz pip na pewno będzie dostępny, bo jesteśmy w kontenerze Pythona
                 sh 'pip install -r requirements.txt'
             }
         }
         stage('Uruchamianie testów') {
             steps {
-                // Odpalamy testy w trybie headless (bez okna przeglądarki)
-                sh 'python3 -m pytest --headless'
+                // Instalujemy Chromium, bo sam Python go nie ma
+                sh '''
+                    apt-get update && apt-get install -y chromium chromium-driver
+                    python3 -m pytest --headless
+                '''
             }
-        }
-    }
-    post {
-        always {
-            echo 'Koniec pracy, melduję wykonanie zadania!'
         }
     }
 }
