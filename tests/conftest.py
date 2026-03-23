@@ -16,8 +16,16 @@ def driver(request):
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--window-size=1920,1080")
-    
-    service = Service(ChromeDriverManager().install())
+
+    # Zmiana tutaj: sprawdzamy, czy sterownik jest w standardowej lokalizacji Linuxa
+    # Jeśli tak (czyli jesteśmy w Jenkinsie), używamy go bezpośrednio.
+    if os.path.exists("/usr/bin/chromedriver"):
+        service = Service("/usr/bin/chromedriver")
+    else:
+        # To zostawiamy dla Twojego lokalnego komputera (Mac)
+        from webdriver_manager.chrome import ChromeDriverManager
+        service = Service(ChromeDriverManager().install())
+        
     driver = webdriver.Chrome(service=service, options=options)
     
     if not request.config.getoption("--headless"):

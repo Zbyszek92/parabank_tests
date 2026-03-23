@@ -12,8 +12,9 @@ pipeline {
             steps {
                 sh '''
                     apt-get update
-                    # Dodajemy python3-venv, który jest kluczowy!
-                    apt-get install -y python3 python3-pip python3-venv chromium chromium-driver
+                    apt-get install -y python3 python3-pip python3-venv chromium chromium-driver \
+                    libnss3 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 \
+                    libxdamage1 libxrandr2 libgbm1 libasound2
                 '''
             }
         }
