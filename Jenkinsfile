@@ -21,7 +21,10 @@ pipeline {
         stage('Instalacja i Testy') {
             steps {
                 sh '''
+                    # Najpierw instalujemy (bezpieczniejsza wersja)
                     pip3 install -r requirements.txt --break-system-packages || pip install -r requirements.txt
+                    
+                    # Dopiero w NOWEJ LINII odpalamy testy
                     python3 -m pytest --headless
                 '''
             }
