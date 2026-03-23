@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Czyszczenie i Pobieranie') {
             steps {
-                // Czyścimy stare śmieci, jeśli jakieś zostały
                 deleteDir()
-                // Pobieramy kod na nowo
                 checkout scm
             }
         }
@@ -14,18 +12,23 @@ pipeline {
             steps {
                 sh '''
                     apt-get update
-                    apt-get install -y python3 python3-pip chromium chromium-driver
+                    # Dodajemy python3-venv, który jest kluczowy!
+                    apt-get install -y python3 python3-pip python3-venv chromium chromium-driver
                 '''
             }
         }
         stage('Instalacja i Testy') {
             steps {
                 sh '''
-                    # Najpierw instalujemy (bezpieczniejsza wersja)
-                    pip3 install -r requirements.txt --break-system-packages || pip install -r requirements.txt
+                    # 1. Tworzymy wirtualne środowisko w folderze 'jenkins_venv'
+                    python3 -m venv jenkins_venv
                     
-                    # Dopiero w NOWEJ LINII odpalamy testy
-                    python3 -m pytest --headless
+                    # 2. Instalujemy biblioteki używając pip-a z tego środowiska
+                    ./jenkins_venv/bin/pip install --upgrade pip
+                    ./jenkins_venv/bin/pip install -r requirements.txt
+                    
+                    # 3. Odpalamy testy używając Pythona z tego środowiska
+                    ./jenkins_venv/bin/python -m pytest --headless
                 '''
             }
         }
