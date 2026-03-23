@@ -1,26 +1,33 @@
 pipeline {
-    // Mówimy Jenkinsowi: "Użyj obrazu Pythona jako swojego środowiska"
-    agent {
-        docker { 
-            image 'python:3.10-slim' 
-        }
-    }
-    
+    agent any 
+
     stages {
-        stage('Instalacja bibliotek') {
+        stage('Przygotowanie systemu') {
             steps {
-                // Teraz pip na pewno będzie dostępny, bo jesteśmy w kontenerze Pythona
-                sh 'pip install -r requirements.txt'
+                // Instalujemy wszystko, czego Jenkinsowi brakuje do życia
+                sh '''
+                    apt-get update
+                    apt-get install -y python3 python3-pip chromium chromium-driver
+                '''
+            }
+        }
+        stage('Instalacja bibliotek Pythona') {
+            steps {
+                // Instalujemy Selenium i Pytest
+                // Flaga --break-system-packages pozwala obejść blokady w nowszych systemach
+                sh 'pip3 install -r requirements.txt --break-system-packages || pip install -r requirements.txt'
             }
         }
         stage('Uruchamianie testów') {
             steps {
-                // Instalujemy Chromium, bo sam Python go nie ma
-                sh '''
-                    apt-get update && apt-get install -y chromium chromium-driver
-                    python3 -m pytest --headless
-                '''
+                // Odpalamy testy w trybie headless
+                sh 'python3 -m pytest --headless'
             }
+        }
+    }
+    post {
+        always {
+            echo 'Praca zakończona. Sprawdź logi powyżej!'
         }
     }
 }
