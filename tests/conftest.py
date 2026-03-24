@@ -10,7 +10,9 @@ def pytest_addoption(parser):
 
 @pytest.fixture()
 def driver(request):
+   
     options = Options()
+    options.add_argument("--incognito")
     
     if request.config.getoption("--headless"):
         options.add_argument("--headless")
@@ -18,13 +20,9 @@ def driver(request):
         options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--window-size=1920,1080")
 
-    # Zmiana tutaj: sprawdzamy, czy sterownik jest w standardowej lokalizacji Linuxa
-    # Jeśli tak (czyli jesteśmy w Jenkinsie), używamy go bezpośrednio.
     if os.path.exists("/usr/bin/chromedriver"):
         service = Service("/usr/bin/chromedriver")
     else:
-        # To zostawiamy dla Twojego lokalnego komputera (Mac)
-        from webdriver_manager.chrome import ChromeDriverManager
         service = Service(ChromeDriverManager().install())
         
     driver = webdriver.Chrome(service=service, options=options)
@@ -33,5 +31,4 @@ def driver(request):
         driver.maximize_window()
         
     yield driver
-    
     driver.quit()

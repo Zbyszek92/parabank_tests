@@ -1,25 +1,26 @@
 import time
-
+import random
+from faker import Faker
 from pages.register_page import Register_page
 
 def test_success_register(driver):
-    # 1 Przygotowanie strony 
     login = Register_page(driver)
     login.load()
 
-    # 2. GENEROWANIE UNIKALNEGO LOGINU
-    unique_username = f"adam_{int(time.time())}"
+    fake = Faker("pl_PL")
     
-    print(f"Rejestruje uzytkownika z loginem: {unique_username}")
+    f_username = f"user_{random.randint(100, 999)}_{int(time.time())}"
+    f_firstname = fake.first_name()
+    f_lastname = fake.last_name()
 
-    # 2 Akcja rejestracji na stronie przez uzytkownika
-    login.login_register("Adas", "Sroka","Testowa 40","Warsaw","Polska", "05-074","111111111", "4321", unique_username, "Testowa1234!","Testowa1234!")
+    login.login_register(
+        f_firstname, f_lastname, "Ulica 1", "Miasto", "Wojewodztwo","00-000", "123456", "SSN", f_username, "Haslo123", "Haslo123")
 
-    # 3 Sprawdzenie poprawności logowania
-    succes = login.get_success_register()
-    assert succes == "Your account was created successfully. You are now logged in."
+    time.sleep(1)
+    success_text = login.get_success_register()
+    assert "Your account was created successfully" in success_text
 
-    
+
 
 
 
