@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from .base_page import BasePage
+from pages.base_page import BasePage
 
 class LoginPage(BasePage):
     # --- LOKALIZATORY ---
@@ -13,8 +13,6 @@ class LoginPage(BasePage):
         self.url = "https://parabank.parasoft.com/parabank/index.htm"
 
     # --- AKCJE NA STRONIE ---
-    def load(self):
-        self.open(self.url)
 
     def login(self, username, password):
         self.enter_text(self.USERNAME_INPUT, username)

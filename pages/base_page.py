@@ -10,6 +10,9 @@ class BasePage:
     def open(self, url):
         self.driver.get(url)
 
+    def load(self):
+        self.open(self.url)
+
     def find_element(self, locator):
         # Explicit Wait: Czeka, aż element faktycznie pojawi się na stronie
         return self.wait.until(EC.visibility_of_element_located(locator))
