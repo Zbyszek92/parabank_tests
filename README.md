@@ -38,4 +38,4 @@ parabank_tests/
 └── requirements.txt        # Zablokowane wersje używanych bibliotek (pip)
 ```
 
-<video src="https://github.com/Zbyszek92/parabank_tests/raw/main/assets/screen_recording.mov" controls="controls" width="100%"></video>
+[🎬 **Kliknij tutaj, aby obejrzeć film demonstracyjny z działania testów**](https://github.com/Zbyszek92/parabank_tests/blob/main/assets/screen_recording.mov)
