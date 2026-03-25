@@ -37,4 +37,4 @@ parabank_tests/
 ├── pytest.ini              # Konfiguracja silnika Pytest 
 └── requirements.txt        # Zablokowane wersje używanych bibliotek (pip)
 
-<video src="assets/screen_recording.mov" controls="controls" width="100%"></video>
+<video src="assets/screen_recording.mov " controls="controls" width="100%"></video>
