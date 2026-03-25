@@ -20,18 +20,18 @@ Projekt demonstracyjny przedstawiający w pełni zautomatyzowane środowisko do 
 
 ## Struktura Projektu
 
-```text
 parabank_tests/
 ├── pages/
 │   ├── __init__.py
-│   ├── base_page.py        # Główne metody "wrappery" (np. WebDriverWait)
+│   ├── base_page.py        # Główne metody "wrappery" (np. WebDriverWait, find_element)
 │   ├── login_page.py       # Lokatory i akcje dla strony logowania
 │   └── register_page.py    # Lokatory i akcje dla formularza rejestracji
 ├── tests/
 │   ├── __init__.py
-│   ├── conftest.py         # Konfiguracja WebDrivera (setup & teardown)
-│   ├── test_login.py       # Asercje i kroki testowe dla logowania
-│   └── test_register.py    # Asercje i kroki testowe dla rejestracji
+│   ├── conftest.py         # Konfiguracja WebDrivera, opcje Chrome i globalne fixtury
+│   ├── test_login.py       # Scenariusze testowe dla procesu logowania
+│   ├── test_register.py    # Scenariusze testowe dla rejestracji użytkownika
+│   └── test_validation.py  # Testy weryfikujące komunikaty walidacyjne
 ├── Jenkinsfile             # Skrypt potoku CI/CD
-├── pytest.ini              # Konfiguracja silnika Pytest
-└── requirements.txt        # Zablokowane wersje bibliotek
+├── pytest.ini              # Konfiguracja silnika Pytest 
+└── requirements.txt        # Zablokowane wersje używanych bibliotek (pip)
