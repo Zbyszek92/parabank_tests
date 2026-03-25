@@ -36,3 +36,5 @@ parabank_tests/
 ├── Jenkinsfile             # Skrypt potoku CI/CD
 ├── pytest.ini              # Konfiguracja silnika Pytest 
 └── requirements.txt        # Zablokowane wersje używanych bibliotek (pip)
+
+<video src="assets/screen_recording.mov" controls="controls" width="100%"></video>
