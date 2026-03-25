@@ -20,6 +20,7 @@ Projekt demonstracyjny przedstawiający w pełni zautomatyzowane środowisko do 
 
 ## Struktura Projektu
 
+```text
 parabank_tests/
 ├── pages/
 │   ├── __init__.py
