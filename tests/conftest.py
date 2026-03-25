@@ -4,6 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+from pages.login_page import LoginPage
+from pages.register_page import RegisterPage
 
 def pytest_addoption(parser):
     parser.addoption("--headless", action="store_true", default=False, help="Uruchom w trybie headless")
@@ -32,3 +34,15 @@ def driver(request):
         
     yield driver
     driver.quit()
+
+@pytest.fixture()
+def login_page(driver):
+    page = LoginPage(driver)
+    page.load()
+    return page
+
+@pytest.fixture()
+def register_page(driver):
+    page = RegisterPage(driver)
+    page.load()
+    return page

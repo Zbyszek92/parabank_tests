@@ -2,7 +2,7 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 
-class Register_page(BasePage):
+class RegisterPage(BasePage):
     # --- LOKALIZATORY ---
     REGISTER_BUTTON = (By.LINK_TEXT,"Register")
     FIRST_NAME = (By.NAME,"customer.firstName")
@@ -23,8 +23,6 @@ class Register_page(BasePage):
         super().__init__(driver)
         self.url = "https://parabank.parasoft.com/parabank/index.htm"
 
-
-    # --- LOKALIZATORY ---
 
     def login_register(self, firstname, lastname, address, city, state, zipcode, phone, ssn, username, password, confirmpassword):
         self.click(self.REGISTER_BUTTON)
